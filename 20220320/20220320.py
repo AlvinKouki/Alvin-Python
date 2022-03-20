@@ -64,8 +64,10 @@ while True:
 
     if cnt <= 1:
         cnt += 1
+        pygame.mixer.music.pause()
     else:
         cnt = 0
+        pygame.mixer.music.pause()
 
     mouse_pos = pygame.mouse.get_pos()
     for event in pygame.event.get():
