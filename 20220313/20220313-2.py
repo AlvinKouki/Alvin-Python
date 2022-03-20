@@ -28,6 +28,11 @@ bg_y = bg.get_height()
 screen = pygame.display.set_mode((bg_x, bg_y))
 pygame.display.set_caption('My Game')
 
+mp3_path = "20220320/snow-dream.mp3"
+pygame.mixer.music.load(mp3_path)
+pygame.mixer.music.play()
+pygame.mixer.music.fadeout(6000000)
+
 typeface = pygame.font.get_default_font()
 font = pygame.font.Font(typeface, 24)
 title = font.render('Start', True, BLACK)
