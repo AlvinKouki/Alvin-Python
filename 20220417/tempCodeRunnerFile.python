@@ -1,0 +1,4 @@
+_x
+    print(roll_x)
+    screen.blit(img, [roll_x - bg_x, 0])
+    screen.blit(img, [roll_x, 0])
