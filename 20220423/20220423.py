@@ -15,7 +15,7 @@ LIMIT_HIGH = 140
 pygame.init()
 pygame.init()
 timer = 0
-
+Red = (255, 0, 0)
 #***初始化設定結束***
 
 #===載入圖片開始===
@@ -34,17 +34,31 @@ roll_x = 0
 #***遊戲視窗設定結束***
 pygame.display.set_caption("Dinosaur")
 screen = pygame.display.set_mode(bg_size)
-#===分數設定開始===
+#===分數設定開始=== 
+score=0
+got_score=False
+typeface=pygame.font.get_default_font()
+score_font-pygame.font.Font(typeface,36)
+score_sur=score_font.render(str(score), False,Red)
+
+def get_score(win):
+    global score, score_sur, got_score
+
+    if (get_score==True):
+
+
 
 #***分數設定結束***
 
 #===恐龍設定開始===
+def move_dinosaur(win,timer):
 
 #***恐龍設定結束***
 ds_x = 50
 ds_y = LIMIT_LOW
 jumpstate = False
 jumpvalue = 0
+
 
 
 def move_dinosaur(win, timer):
@@ -61,11 +75,21 @@ def move_dinosaur(win, timer):
 
 
 #===仙人掌設定開始===
-
-#***仙人掌設定結束***
 cacti_x = bg_x - 100
 cacti_y = LIMIT_LOW
 cacti_shift = 10
+def move_cacti(win):
+    global cacti_x, cacti_y,cacti_shift 
+    global score,score_sur, got_score
+    cacti_x-=cacti_shift
+    if (cacti_x<0):
+        got_score=True
+        cacti_shift=10
+    win.blit(img_cacti, [cacti_x,cacti_y])
+    cacti_dist=int((cacti_w+cacti_h)/2)
+
+#***仙人掌設定結束***
+
 
 
 def move_cacti(win):
@@ -75,6 +99,11 @@ def move_cacti(win):
 
 
 #***碰撞設定結束***
+def is_hit(x1,y1,x2,y2,r):
+    if ((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2)<(r*r)):
+        return True
+    else:
+        return False
 
 #***碰撞設定結束***
 
@@ -104,7 +133,11 @@ while 1:
     #===遊戲進行===
 
     #===更新角色狀態===
+    
     move_dinosaur(screen, timer)
     move_cacti(screen)
-    pygame.display.update()
+    get_score(screen)
+    if (is_hit(ds_x,ds_y,cacti_x,cacti_y,cacti_dist)):
+        print("hit")   
+pygame.display.update()
 #===主程式結束===
