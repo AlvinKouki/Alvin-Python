@@ -1,5 +1,6 @@
 #===載入套件開始
 from pickle import TRUE
+from turtle import Screen, width
 import pygame
 import sys
 import os
@@ -79,7 +80,7 @@ cacti_x = bg_x - 100
 cacti_y = LIMIT_LOW
 cacti_shift = 10
 def move_cacti(win):
-    global cacti_x, cacti_y,cacti_shift 
+    global cacti_x, cacti_y,cacti_shift
     global score,score_sur, got_score
     cacti_x-=cacti_shift
     if (cacti_x<0):
@@ -108,7 +109,11 @@ def is_hit(x1,y1,x2,y2,r):
 #***碰撞設定結束***
 
 #===GameOver設定開始===
-
+gg=False
+gg_img_w=img_gg.get_width()
+gg_img_h=img_gg.get_height()    
+def game_over(win):
+    win.blit(img_gg,((bg_x-gg_img_w)/2,(bg_y-gg_img_h)/2))
 #***GameOver設定結束***
 
 #===主程式開始===
@@ -124,20 +129,27 @@ while 1:
     #===計時與速度===
 
     #===偵測鍵盤事件開始===
+    for event in pygame.get():
+        if event.type==pygame.Quit:
+             sys.exit()
+        elif event.key==K_SPACE and ds_y== LIMIT_LOW:
+            gg=False
+            
 
     #===遊戲結束===
     roll_x = (roll_x - 10) % bg_x
     print(roll_x)
     screen.blit(img, [roll_x - bg_x, 0])
     screen.blit(img, [roll_x, 0])
+    game_over(screen)
     #===遊戲進行===
 
-    #===更新角色狀態===
+    #===更新角色狀態=== 
     
     move_dinosaur(screen, timer)
     move_cacti(screen)
     get_score(screen)
     if (is_hit(ds_x,ds_y,cacti_x,cacti_y,cacti_dist)):
-        print("hit")   
+        gg=True
 pygame.display.update()
 #===主程式結束===

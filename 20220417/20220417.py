@@ -1,5 +1,5 @@
 #===載入套件開始
-from pickle import TRUE
+from pickle import TRUE  #基本設定
 import pygame
 import sys
 import os
