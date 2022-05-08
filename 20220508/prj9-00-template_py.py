@@ -1,5 +1,5 @@
 #===載入套件開始===
-from turtle import begin_poly
+
 import pygame
 import sys
 import os
@@ -61,10 +61,12 @@ def move_starship(win, key, timer):
     ss_sur = img_sship[0]
     if key[pygame.K_UP]:
         ss_y -= 20
-        if ss_y < ss_hh:
+        if ss_y > bg_y - ss_hh:
             ss_y = bg_y - ss_hh
     if key[pygame.K_DOWN]:
         ss_y += 20
+        if ss_y < ss_hh:
+            ss_y = bg_y - ss_hh
     if key[pygame.K_LEFT]:
         ss_x -= 20
         ss_sur = img_sship[1]
