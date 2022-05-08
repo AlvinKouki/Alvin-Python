@@ -166,6 +166,7 @@ def game_over(win):
 while 1:
     clock.tick(20)
     timer += 1
+    #===偵測鍵盤事件開始===
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -191,7 +192,6 @@ while 1:
 
     #===計時與速度===
 
-    #===偵測鍵盤事件開始===
     if gg == True:
         game_over(screen)
         #
@@ -209,7 +209,7 @@ while 1:
             move_ptera(screen, timer)
         get_score(screen)
         if (is_hit(ds_x, ds_y, cacti_x, cacti_y, cacti_dist)
-                or is_hit(ds_x, ds_y, ptera_x, ptera_y, ptera_dist)):
+                or is_hit(ds_x, ds_y, ptera_x, ptera_y, ptera_dist)):  #
             gg = True
         #===遊戲進行===
 
