@@ -36,8 +36,8 @@ class mcu_fun:
         print('network config:', wlan.ifconfig())
         self.ip = wlan.ifconfig()[0]
 
-    def led_initial(self, r_pin, g_pin, b_pin, mode: str = 'digital'):
-        if mode.lower() == 'digital':
+    def led_initial(self, r_pin, g_pin, b_pin, pwm: bool = False):
+        if pwm == False:
             RED = Pin(r_pin, Pin.OUT)
             BLUE = Pin(b_pin, Pin.OUT)
             GREEN = Pin(g_pin, Pin.OUT)
@@ -57,7 +57,7 @@ class mcu_fun:
         lcd = I2cLcd(i2c, 0x27, 2, 16)
         return lcd
 
-    def mqtt_subscribe(self, mq_id: str):
+    def mqtt_subscribe(self, mq_id: str, callback=None):
         mq_server = "singularmakers.asuscomm.com"
         mq_user = "singular"
         mq_pass = "1234"
@@ -75,6 +75,14 @@ class mcu_fun:
         finally:
             print("connected MQTT server")
 
-    def mqtt_get_msg(self, on_message, topic: str):
-        self.mqClient0.set_callback(on_message)
+        self.mqClient0.set_callback(callback)
+
+    def mqtt_get_msg(self, topic: str):
         self.mqClient0.subscribe(topic)
+        self.mqClient0.check_msg()
+        self.mqClient0.ping()
+
+    def mqtt_put_msg(self, topic: str, msg: str):
+        topic = topic.encode('utf-8')
+        msg = msg.encode('utf-8')
+        self.mqClient0.publish(topic, msg)
