@@ -86,3 +86,7 @@ class mcu_fun:
         topic = topic.encode('utf-8')
         msg = msg.encode('utf-8')
         self.mqClient0.publish(topic, msg)
+
+    def servo_angle(self, sg, angle):
+        if 0 <= angle <= 180:
+            sg.duty(int(1023 * (0.5 + angle / 90) / 20))
